@@ -1,0 +1,114 @@
+<%- include('partials/head', { pageTitle: 'Home', metaDesc: 'NoteShare – Upload, search, and download student notes seamlessly.' }) %>
+<%- include('partials/navbar') %>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-orb orb-1"></div>
+    <div class="hero-orb orb-2"></div>
+    <div class="container hero-content">
+      <div class="hero-badge">✨ Free for all students</div>
+      <h1 class="hero-title">Share knowledge,<br><span class="gradient-text">ace every exam.</span></h1>
+      <p class="hero-desc">NoteShare is the student-first platform to upload, discover, and download class notes, slides, and study materials — all in one place.</p>
+      <div class="hero-actions">
+        <a href="/register" class="btn btn-primary btn-lg">Get Started Free</a>
+        <a href="/login" class="btn btn-outline btn-lg">Sign In</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-num"><%= stats.totalNotes %>+</span>
+          <span class="stat-label">Notes Shared</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num"><%= stats.totalUsers %>+</span>
+          <span class="stat-label">Students</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num"><%= stats.totalDownloads %>+</span>
+          <span class="stat-label">Downloads</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Everything you need to <span class="gradient-text">study smarter</span></h2>
+        <p>Built for students, by students. No noise, just notes.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Drag & Drop Upload</h3>
+          <p>Upload PDF, DOCX, PPT, TXT and images instantly with our intuitive drag-and-drop interface.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#14b8a6,#10b981)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="white" stroke-width="2"/><path d="m21 21-4.35-4.35" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Smart Search & Filter</h3>
+          <p>Find notes by title, description, or subject with instant search and category filters.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>One-Click Download</h3>
+          <p>Download any note file instantly. Every download is tracked so you know what's popular.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#ec4899,#8b5cf6)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Download Analytics</h3>
+          <p>Track how many times your notes have been downloaded. See your impact on the community.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#3b82f6,#6366f1)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Secure & Private</h3>
+          <p>Your account is protected with encrypted passwords and server-side sessions.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#10b981,#3b82f6)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Community Driven</h3>
+          <p>A growing library of notes shared by students across all subjects and levels.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta section">
+    <div class="container">
+      <div class="cta-card">
+        <div class="cta-orb"></div>
+        <h2>Ready to start sharing?</h2>
+        <p>Join hundreds of students already using NoteShare to study smarter.</p>
+        <a href="/register" class="btn btn-white btn-lg">Create Free Account</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="nav-brand">
+        <svg width="22" height="22" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="url(#fg)"/><path d="M8 10h16M8 16h12M8 22h10" stroke="white" stroke-width="2.5" stroke-linecap="round"/><defs><linearGradient id="fg" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs></svg>
+        <span>NoteShare</span>
+      </div>
+      <p class="footer-copy">&copy; <%= new Date().getFullYear() %> NoteShare. Built for students.</p>
+    </div>
+  </footer>
+</main>
+
+<%- include('partials/footer') %>

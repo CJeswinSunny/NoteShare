@@ -1,0 +1,96 @@
+<%
+const iconMap = {
+  pdf: { color: '#ef4444', bg: 'rgba(239,68,68,0.12)', label: 'PDF' },
+  doc:  { color: '#3b82f6', bg: 'rgba(59,130,246,0.12)', label: 'DOC' },
+  docx: { color: '#3b82f6', bg: 'rgba(59,130,246,0.12)', label: 'DOCX' },
+  ppt:  { color: '#f59e0b', bg: 'rgba(245,158,11,0.12)', label: 'PPT' },
+  pptx: { color: '#f59e0b', bg: 'rgba(245,158,11,0.12)', label: 'PPTX' },
+  txt:  { color: '#10b981', bg: 'rgba(16,185,129,0.12)', label: 'TXT' },
+  image:{ color: '#8b5cf6', bg: 'rgba(139,92,246,0.12)', label: 'IMG' },
+};
+const ft = iconMap[note.file_type] || { color: '#6366f1', bg: 'rgba(99,102,241,0.12)', label: 'FILE' };
+const sizeDisplay = note.file_size > 1024*1024 ? (note.file_size/(1024*1024)).toFixed(1)+' MB' : (note.file_size/1024).toFixed(0)+' KB';
+const date = new Date(note.created_at).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+const isOwner = user && user.id === note.uploader_id;
+%>
+<%- include('partials/head', { pageTitle: note.title, metaDesc: note.description || 'Student note on ' + note.subject }) %>
+<%- include('partials/navbar') %>
+
+<main class="app-main">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/dashboard">Browse</a>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span><%= note.title %></span>
+    </div>
+
+    <div class="note-detail-layout">
+      <!-- Main -->
+      <div class="note-detail-main">
+        <div class="detail-card">
+          <div class="detail-header">
+            <div class="file-badge-lg" style="color:<%= ft.color %>;background:<%= ft.bg %>"><%= ft.label %></div>
+            <span class="detail-subject"><%= note.subject %></span>
+          </div>
+          <h1 class="detail-title"><%= note.title %></h1>
+          <% if (note.description) { %>
+            <p class="detail-desc"><%= note.description %></p>
+          <% } %>
+
+          <div class="detail-meta-grid">
+            <div class="meta-item">
+              <span class="meta-label">Uploaded by</span>
+              <div class="uploader-row">
+                <div class="avatar-sm" style="background:<%= note.avatar_color %>"><%= note.uploader_name.charAt(0).toUpperCase() %></div>
+                <span class="meta-value"><%= note.uploader_name %></span>
+              </div>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Date</span>
+              <span class="meta-value"><%= date %></span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">File Size</span>
+              <span class="meta-value"><%= sizeDisplay %></span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Downloads</span>
+              <span class="meta-value dl-highlight"><%= note.downloads %> times</span>
+            </div>
+          </div>
+
+          <div class="detail-actions">
+            <a href="/download/<%= note.id %>" class="btn btn-primary btn-lg">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Download File
+            </a>
+            <a href="/dashboard" class="btn btn-ghost">← Back to Browse</a>
+            <% if (isOwner) { %>
+              <form action="/note/<%= note.id %>/delete" method="POST" onsubmit="return confirm('Delete this note? This cannot be undone.')">
+                <button type="submit" class="btn btn-danger">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Delete
+                </button>
+              </form>
+            <% } %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="note-detail-sidebar">
+        <div class="sidebar-card">
+          <h3>File Info</h3>
+          <div class="info-rows">
+            <div class="info-row"><span>Type</span><span class="badge-sm" style="color:<%= ft.color %>;background:<%= ft.bg %>"><%= ft.label %></span></div>
+            <div class="info-row"><span>Size</span><span><%= sizeDisplay %></span></div>
+            <div class="info-row"><span>Subject</span><span><%= note.subject %></span></div>
+            <div class="info-row"><span>Downloads</span><span><%= note.downloads %></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('partials/footer') %>

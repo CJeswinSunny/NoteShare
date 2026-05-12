@@ -1,0 +1,123 @@
+<%- include('partials/head', { pageTitle: 'Upload Note', metaDesc: 'Upload your class notes and study materials to NoteShare.' }) %>
+<%- include('partials/navbar') %>
+
+<main class="app-main">
+  <div class="container upload-container">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Upload a Note</h1>
+        <p class="page-sub">Share your knowledge with the community</p>
+      </div>
+    </div>
+
+    <div class="upload-layout">
+      <!-- Upload Form -->
+      <div class="upload-card">
+        <% if (error) { %>
+          <div class="alert alert-error"><%= error %></div>
+        <% } %>
+
+        <form action="/upload" method="POST" enctype="multipart/form-data" id="uploadForm">
+          <!-- Drop Zone -->
+          <div class="drop-zone" id="dropZone">
+            <div class="drop-zone-content" id="dropContent">
+              <div class="drop-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" stroke="url(#dg)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="dg" x1="4" y1="4" x2="20" y2="20" gradientUnits="userSpaceOnUse"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs></svg>
+              </div>
+              <p class="drop-title">Drag & drop your file here</p>
+              <p class="drop-sub">or click to browse</p>
+              <p class="drop-types">PDF · DOC · PPT · TXT · Images · Max 50 MB</p>
+            </div>
+            <div class="file-preview hidden" id="filePreview">
+              <div class="file-preview-icon" id="previewIcon"></div>
+              <div class="file-preview-info">
+                <span class="file-preview-name" id="previewName"></span>
+                <span class="file-preview-size" id="previewSize"></span>
+              </div>
+              <button type="button" class="file-preview-remove" id="removeFile" aria-label="Remove file">✕</button>
+            </div>
+            <input type="file" name="file" id="fileInput" class="file-input" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.jpg,.jpeg,.png,.gif,.webp">
+          </div>
+
+          <!-- Metadata -->
+          <div class="form-group">
+            <label for="title">Note Title <span class="req">*</span></label>
+            <input type="text" id="title" name="title" placeholder="e.g. Chapter 5 – Thermodynamics" required maxlength="120">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="subject">Subject <span class="req">*</span></label>
+              <select id="subject" name="subject" required>
+                <option value="">Select subject…</option>
+                <% subjects.forEach(s => { %>
+                  <option value="<%= s %>"><%= s %></option>
+                <% }) %>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description <span class="opt">(optional)</span></label>
+            <textarea id="description" name="description" rows="3" placeholder="What does this note cover? Topics, chapters, exam tips…" maxlength="500"></textarea>
+            <small class="char-counter" id="charCounter">0 / 500</small>
+          </div>
+
+          <!-- Upload progress -->
+          <div class="upload-progress hidden" id="uploadProgress">
+            <div class="progress-bar">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <span class="progress-text" id="progressText">Uploading…</span>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full" id="uploadBtn" disabled>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Upload Note
+          </button>
+        </form>
+      </div>
+
+      <!-- Sidebar Tips -->
+      <div class="upload-sidebar">
+        <div class="tips-card">
+          <h3 class="tips-title">Upload Tips</h3>
+          <ul class="tips-list">
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Use a clear, descriptive title
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Choose the correct subject
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Add a description for discoverability
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              PDF format is preferred
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Maximum file size: 50 MB
+            </li>
+          </ul>
+        </div>
+        <div class="supported-formats">
+          <h3 class="tips-title">Supported Formats</h3>
+          <div class="format-chips">
+            <span class="format-chip pdf">PDF</span>
+            <span class="format-chip doc">DOC/DOCX</span>
+            <span class="format-chip ppt">PPT/PPTX</span>
+            <span class="format-chip txt">TXT</span>
+            <span class="format-chip img">Images</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('partials/footer') %>

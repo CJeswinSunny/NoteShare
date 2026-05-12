@@ -1,0 +1,49 @@
+<%
+const iconMap = {
+  pdf: { color: '#ef4444', bg: 'rgba(239,68,68,0.12)', icon: 'PDF' },
+  doc:  { color: '#3b82f6', bg: 'rgba(59,130,246,0.12)', icon: 'DOC' },
+  docx: { color: '#3b82f6', bg: 'rgba(59,130,246,0.12)', icon: 'DOC' },
+  ppt:  { color: '#f59e0b', bg: 'rgba(245,158,11,0.12)', icon: 'PPT' },
+  pptx: { color: '#f59e0b', bg: 'rgba(245,158,11,0.12)', icon: 'PPT' },
+  txt:  { color: '#10b981', bg: 'rgba(16,185,129,0.12)', icon: 'TXT' },
+  image:{ color: '#8b5cf6', bg: 'rgba(139,92,246,0.12)', icon: 'IMG' },
+};
+const ft = iconMap[note.file_type] || { color: '#6366f1', bg: 'rgba(99,102,241,0.12)', icon: 'FILE' };
+const sizeKB = (note.file_size / 1024).toFixed(0);
+const sizeMB = (note.file_size / (1024*1024)).toFixed(1);
+const sizeDisplay = note.file_size > 1024*1024 ? sizeMB + ' MB' : sizeKB + ' KB';
+const date = new Date(note.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+%>
+<article class="note-card" data-id="<%= note.id %>">
+  <div class="note-card-header">
+    <div class="file-badge" style="color:<%= ft.color %>;background:<%= ft.bg %>"><%= ft.icon %></div>
+    <div class="note-subject-tag"><%= note.subject %></div>
+  </div>
+  <div class="note-card-body">
+    <h3 class="note-title"><a href="/note/<%= note.id %>"><%= note.title %></a></h3>
+    <% if (note.description) { %>
+      <p class="note-desc"><%= note.description.substring(0, 100) %><%= note.description.length > 100 ? '…' : '' %></p>
+    <% } %>
+  </div>
+  <div class="note-card-footer">
+    <div class="note-meta">
+      <div class="uploader-info">
+        <div class="avatar-xs" style="background:<%= note.avatar_color %>"><%= note.uploader_name.charAt(0).toUpperCase() %></div>
+        <span><%= note.uploader_name.split(' ')[0] %></span>
+      </div>
+      <span class="meta-dot">·</span>
+      <span class="meta-date"><%= date %></span>
+    </div>
+    <div class="note-actions-row">
+      <span class="dl-count">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <%= note.downloads %>
+      </span>
+      <span class="file-size-label"><%= sizeDisplay %></span>
+      <a href="/download/<%= note.id %>" class="btn-dl" title="Download">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Download
+      </a>
+    </div>
+  </div>
+</article>

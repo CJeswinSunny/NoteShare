@@ -1,0 +1,17 @@
+<%- include('partials/head', { pageTitle: 'Error', metaDesc: 'An error occurred on NoteShare.' }) %>
+<%- include('partials/navbar') %>
+
+<main class="app-main">
+  <div class="container">
+    <div class="error-page">
+      <div class="error-code">
+        <svg width="80" height="80" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="url(#eg)" stroke-width="1.5"/><path d="M12 8v4m0 4h.01" stroke="url(#eg2)" stroke-width="2" stroke-linecap="round"/><defs><linearGradient id="eg" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient><linearGradient id="eg2" x1="12" y1="8" x2="12" y2="16" gradientUnits="userSpaceOnUse"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs></svg>
+      </div>
+      <h1>Oops!</h1>
+      <p class="error-msg"><%= message || 'Something went wrong.' %></p>
+      <a href="<%= user ? '/dashboard' : '/' %>" class="btn btn-primary">Go Back Home</a>
+    </div>
+  </div>
+</main>
+
+<%- include('partials/footer') %>
